@@ -14,7 +14,6 @@ class MemberController extends Controller
     public function index()
     {
         //
-        echo "helloWorld";
     }
 
     /**
