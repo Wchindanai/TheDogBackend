@@ -101,4 +101,32 @@ class MemberController extends Controller
     {
         //
     }
+
+    public function login(Request $request)
+    {
+
+        $member = Member::where('username', $request->username)
+            ->where('password', hash('md5', $request->password))
+            ->first();
+
+        if(count($member)){
+            $data = [
+                "result" => "Success",
+                "data" => [
+                    "id" => $member->id
+                ],
+                "errorMessage" => null
+            ];
+            return response()->json($data);
+        }
+        else{
+            $data = [
+                "result" => "Fail",
+                "data" => null,
+                "errorMessage" => "Member Not Found"
+            ];
+            return response()->json($data, 400);
+        }
+
+    }
 }
