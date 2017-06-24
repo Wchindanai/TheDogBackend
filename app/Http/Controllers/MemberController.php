@@ -109,7 +109,7 @@ class MemberController extends Controller
             ->where('password', hash('md5', $request->password))
             ->first();
 
-        if(count($member)){
+        if (count($member)) {
             $data = [
                 "result" => "Success",
                 "data" => [
@@ -118,8 +118,7 @@ class MemberController extends Controller
                 "errorMessage" => null
             ];
             return response()->json($data);
-        }
-        else{
+        } else {
             $data = [
                 "result" => "Fail",
                 "data" => null,
