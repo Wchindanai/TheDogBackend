@@ -19,3 +19,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::resource('members', "MemberController");
 Route::post('login', 'MemberController@Login');
+Route::get('get_nearby', 'MapController@getNearby');
+Route::get('get_list', "MapController@getList");
