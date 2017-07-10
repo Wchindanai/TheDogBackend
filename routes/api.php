@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,3 +22,4 @@ Route::resource('members', "MemberController");
 Route::post('login', 'MemberController@Login');
 Route::get('get_nearby', 'MapController@getNearby');
 Route::get('get_list', "MapController@getList");
+Route::resource('accident', "AccidentController");
