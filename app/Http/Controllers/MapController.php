@@ -41,7 +41,7 @@ class MapController extends Controller
         $lng = $location[1];
         $client = new Client();
         try {
-            $res = $client->request('GET', "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=$lat,$lng&radius=2000&types=veterinary_care&key=AIzaSyBx_t7bHQ0LsDsZ2pzN-Zrn7G_OAyLRlSQ");
+            $res = $client->request('GET', "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=$lat,$lng&radius=2000&types=veterinary_care&key=AIzaSyA8oHOWv6zvC1QSImujwIqtRFv7lvH4E9c");
             if ($res->getStatusCode() == 200) {
                 $location = $res->getBody();
                 $response = [
@@ -63,7 +63,7 @@ class MapController extends Controller
         $arrLocation = [];
         $i = 0 ;
         foreach ($jsonData['results'] as $value){
-             $arrLocation[$i] = ['lat' => $value['geometry']['location']['lat'], 'lng' => $value['geometry']['location']['lng']];
+             $arrLocation[$i] = ['lat' => $value['geometry']['location']['lat'], 'lng' => $value['geometry']['location']['lng'], 'title' => $value['name']];
             $i++;
         }
         $location["location"] = $arrLocation;

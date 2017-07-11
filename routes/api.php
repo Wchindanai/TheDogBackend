@@ -23,3 +23,5 @@ Route::post('login', 'MemberController@Login');
 Route::get('get_nearby', 'MapController@getNearby');
 Route::get('get_list', "MapController@getList");
 Route::resource('accident', "AccidentController");
+Route::resource('diagnosis', "DiagnosisController");
+Route::resource('question', 'QuestionController');
