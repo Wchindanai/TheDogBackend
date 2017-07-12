@@ -62,7 +62,7 @@ class MapController extends Controller
         $jsonData = json_decode($body, true);
         $arrLocation = [];
         $i = 0;
-        foreach ($jsonData['result'] as $value){
+        foreach ($jsonData['results'] as $value){
             $arrLocation[$i] = [
                 "location" => [
                     "lat" => $value['geometry']['location']['lat'],
