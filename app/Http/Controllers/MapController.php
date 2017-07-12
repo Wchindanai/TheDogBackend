@@ -20,7 +20,7 @@ class MapController extends Controller
             if ($res->getStatusCode() == 200) {
                 $location = $this->getLocation($res->getBody());
                 $response = [
-                  "result" => "Success",
+                    "result" => "Success",
                     "data" => $location,
                     "errorMessage" => null
                 ];
@@ -35,7 +35,7 @@ class MapController extends Controller
 
     public function getList(Request $request)
     {
-        $location = $request->query(location);
+        $location = $request->query("location");
         $location = explode(",", $location);
         $lat = $location[0];
         $lng = $location[1];
@@ -43,7 +43,8 @@ class MapController extends Controller
         try {
             $res = $client->request('GET', "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=$lat,$lng&radius=2000&types=veterinary_care&key=AIzaSyA8oHOWv6zvC1QSImujwIqtRFv7lvH4E9c");
             if ($res->getStatusCode() == 200) {
-                $location = $res->getBody();
+                $body = $res->getBody();
+                $location = $this->getListLocation($body);
                 $response = [
                     "result" => "Success",
                     "data" => $location,
@@ -56,14 +57,33 @@ class MapController extends Controller
         }
     }
 
+    private function getListLocation($body)
+    {
+        $jsonData = json_decode($body, true);
+        $arrLocation = [];
+        $i = 0;
+        foreach ($jsonData['result'] as $value){
+            $arrLocation[$i] = [
+                "location" => [
+                    "lat" => $value['geometry']['location']['lat'],
+                    "lng" => $value['geometry']['location']['lng']
+                ],
+                "name" => $value["name"],
+                "address" => $value["vicinity"],
+            ];
+            $i++;
+        }
+        return $arrLocation;
+    }
+
     private function getLocation($getBody)
     {
         $jsonData = json_decode($getBody, true);
         $location = [];
         $arrLocation = [];
-        $i = 0 ;
-        foreach ($jsonData['results'] as $value){
-             $arrLocation[$i] = ['lat' => $value['geometry']['location']['lat'], 'lng' => $value['geometry']['location']['lng'], 'title' => $value['name']];
+        $i = 0;
+        foreach ($jsonData['results'] as $value) {
+            $arrLocation[$i] = ['lat' => $value['geometry']['location']['lat'], 'lng' => $value['geometry']['location']['lng'], 'title' => $value['name']];
             $i++;
         }
         $location["location"] = $arrLocation;
